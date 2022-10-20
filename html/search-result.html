@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Search</title>
+</head>
+
+<body>
+    <my-header></my-header>
+    <sub-header></sub-header>
+    <button class="open-filt-mod"><i class="fa-solid fa-arrow-down-wide-short"></i></button>        
+    <main class="filt-output">
+            <div class="brand-filter">
+                <button class="close-filt-mod"><i class="fa-solid fa-xmark"></i></button>
+                <div class="form-cont">
+                    <div class="brand-form">
+                        <label for="brands">Filter by brand</label>
+                        <input name="brands" list="brands" type="text" class="brand" placeholder="fenty, nyx">
+                        <datalist id="brands">
+                        </datalist>
+                        <button class="search-com-pr">filter</button>
+                    </div>
+    
+                    <div class="tag-cont">
+                        <label for="tags">Filter by classification</label>
+                        <input name="tags" list="tags" class="tag" placeholder="vegan, cruel free">
+                        <button class="search-tag-pr">filter</button>
+                        <datalist id="tags">
+                        </datalist>
+                    </div>
+                </div>
+                <!-- <div class="br-filt-radio">
+                    <button class="open-radio">choose your brand</button>
+                    <div class="radios">
+                        <input  class="rad-btn-ch" type="radio" value="nyx" id="nyx">lNYX</input>
+                        <input class="rad-btn-ch" type="radio" value="clinique" id="clinique">clinique</input>
+                        <input class="rad-btn-ch" type="radio" value="dior" id="dior">dior</input>
+                        <input class="rad-btn-ch" type="radio" value="fenty" id="fenty">fenty</input>
+                        <input class="rad-btn-ch" type="radio" value="maybelline" id="maybelline">maybelline</input>
+                    </div>
+                </div>-->
+            </div> 
+        <section class="cosmetics-container"></section>
+        <section class="filtered-container">
+        </section>
+    </main>
+
+    <my-footer></my-footer>
+    <script src="../script/html-components.js"></script>
+    <script src="../script/search-products.js"></script>
+    <script src="../script/output-search.js"></script>
+</body>
+
+</html>
