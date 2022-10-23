@@ -11,10 +11,12 @@
 </head>
 
 <body>
-    <my-header></my-header>
-    <sub-header></sub-header>
-    <button class="open-filt-mod"><i class="fa-solid fa-arrow-down-wide-short"></i></button>        
-    <main class="filt-output">
+    <div class="wrapper-w-photo">
+
+        <my-header></my-header>
+        <sub-header></sub-header>
+        <button class="open-filt-mod"><i class="fa-solid fa-arrow-down-wide-short"></i></button>
+        <main class="filt-output">
             <div class="brand-filter">
                 <button class="close-filt-mod"><i class="fa-solid fa-xmark"></i></button>
                 <div class="form-cont">
@@ -25,7 +27,7 @@
                         </datalist>
                         <button class="search-com-pr">filter</button>
                     </div>
-    
+
                     <div class="tag-cont">
                         <label for="tags">Filter by classification</label>
                         <input name="tags" list="tags" class="tag" placeholder="vegan, cruel free">
@@ -34,23 +36,14 @@
                         </datalist>
                     </div>
                 </div>
-                <!-- <div class="br-filt-radio">
-                    <button class="open-radio">choose your brand</button>
-                    <div class="radios">
-                        <input  class="rad-btn-ch" type="radio" value="nyx" id="nyx">lNYX</input>
-                        <input class="rad-btn-ch" type="radio" value="clinique" id="clinique">clinique</input>
-                        <input class="rad-btn-ch" type="radio" value="dior" id="dior">dior</input>
-                        <input class="rad-btn-ch" type="radio" value="fenty" id="fenty">fenty</input>
-                        <input class="rad-btn-ch" type="radio" value="maybelline" id="maybelline">maybelline</input>
-                    </div>
-                </div>-->
-            </div> 
-        <section class="cosmetics-container"></section>
-        <section class="filtered-container">
-        </section>
-    </main>
+            </div>
+            <section class="cosmetics-container"></section>
+            <section class="filtered-container">
+            </section>
+        </main>
 
-    <my-footer></my-footer>
+        <my-footer></my-footer>
+    </div>
     <script src="../script/html-components.js"></script>
     <script src="../script/search-products.js"></script>
     <script src="../script/output-search.js"></script>

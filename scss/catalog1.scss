@@ -1,11 +1,13 @@
 body {
 
+    
+}
+
+.wrapper-w-photo {
     background-image: url(../assets/images/desert-back6.jpg);
     background-repeat: repeat-y;
     background-size: cover;
 }
-
-.background-photo {}
 
 .catalog-of-products {
     display: flex;
@@ -230,7 +232,7 @@ footer {
         gap: 34px;
     }
     .lips{
-        gap: 34px;
+gap: 34px;
     }
 }
 @media screen and (max-width: 650px) {

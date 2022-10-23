@@ -5,12 +5,14 @@
 @import "categ-comp";
 @import "search-filter";
 
-body {}
 
-.back-image {
+body {
     background-image: url(../assets/images/desert-back4.jpg) !important;
     background-repeat: repeat-y;
     background-size: cover;
+}
+
+.back-image{
 
 }
 

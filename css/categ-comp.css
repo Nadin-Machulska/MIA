@@ -39,6 +39,7 @@
   font-size: 17px;
   color: white;
   width: 100%;
+  text-transform: lowercase;
 }
 .modal-filter button:hover {
   color: black;
@@ -86,7 +87,7 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 1px;
-  grid-row-gap: 10px;
+  grid-row-gap: 64px;
 }
 
 .found-filt-cont {
@@ -149,7 +150,7 @@
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 17px;
-  grid-row-gap: 14px;
+  grid-row-gap: 64px;
 }
 
 .link {
