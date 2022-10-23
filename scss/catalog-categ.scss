@@ -140,7 +140,7 @@
     margin-top: 50px;
     display: grid;
     justify-items: center;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(5, 1fr);
     grid-column-gap: 1px;
     grid-row-gap: 10px;
@@ -222,6 +222,16 @@
     grid-row-gap: 14px;
 
 }
+
+.filt-container{
+    justify-items: center;
+    justify-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 82px;
+    grid-row-gap: 64px;
+}
+
 
 @media screen and (max-width: 650px) {
     .modal-filter {

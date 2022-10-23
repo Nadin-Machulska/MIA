@@ -15,10 +15,7 @@ const filterBrows = document.querySelector('.brows')
 
 //containers
 const cosmeticsContainer = document.querySelector('.eyes-cosm-container');
-const browsContainer = document.querySelector('.brows-filt-cont');
-const linerContainer = document.querySelector('.lin-filt-cont');
-const shadowContainer = document.querySelector('.shad-filt-cont');
-const mascaraContainer = document.querySelector('.masc-filt-cont');
+const filterOutputContainer = document.querySelector('.filt-container');
 
 createAllEyesProducts();
 const allEyesProducts = []
@@ -26,7 +23,6 @@ let brows
 let eyeLiners
 let shadows
 let mascaras
-allEyesProducts.push(brows, eyeLiners, shadows, mascaras);
 
 function createAllEyesProducts() {
     const urlEyebrow = 'http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyebrow'
@@ -37,6 +33,7 @@ function createAllEyesProducts() {
     xhttp.onload = () => {
         brows = JSON.parse(xhttp.responseText);
         console.log(brows);
+        allEyesProducts.push(brows);
         for (let i = 0; i < brows.length; i++) {
 
             const productItem = document.createElement('div');
@@ -86,7 +83,7 @@ function createAllEyesProducts() {
     xhttpSecond.send();
     xhttpSecond.onload = () => {
         eyeLiners = JSON.parse(xhttpSecond.responseText);
-
+        allEyesProducts.push(eyeLiners);
         console.log(eyeLiners);
         for (let i = 0; i < eyeLiners.length; i++) {
 
@@ -139,6 +136,7 @@ function createAllEyesProducts() {
     xttpThird.send();
     xttpThird.onload = () => {
         shadows = JSON.parse(xttpThird.responseText);
+        allEyesProducts.push(shadows);
         console.log(shadows);
         for (let i = 0; i < shadows.length; i++) {
 
@@ -190,6 +188,7 @@ function createAllEyesProducts() {
     xttpFourth.send();
     xttpFourth.onload = () => {
         mascaras = JSON.parse(xttpFourth.responseText);
+        allEyesProducts.push(mascaras);
         console.log(mascaras);
         for (let i = 0; i < mascaras.length; i++) {
 
@@ -232,6 +231,61 @@ function createAllEyesProducts() {
             })
             addBtn.innerText = 'add';
         }
+    }
+
+    // allEyesProducts.push(brows, eyeLiners, shadows, mascaras);
+}
+
+filterBrows.addEventListener('click', () => renderFilteredProductsCards(brows))
+filterLiner.addEventListener('click', () => renderFilteredProductsCards(eyeLiners))
+filterShadows.addEventListener('click', () => renderFilteredProductsCards(shadows))
+filterMascara.addEventListener('click', () => renderFilteredProductsCards(mascaras))
+showAllButton.addEventListener('click', () => renderFilteredProductsCards(allEyesProducts.flat()));
+
+function renderFilteredProductsCards(array) {
+    filterOutputContainer.innerHTML = '';
+    cosmeticsContainer.style.display = 'none';
+    filterOutputContainer.style.display = 'grid';
+
+    for (let i = 0; i < array.length; i++) {
+
+        const productItem = document.createElement('div');
+        productItem.classList.add('eyes-cosm-prod');
+
+        const div = document.createElement('div')
+        div.classList.add('eyes-cosm-prod-cont');
+
+        const productImg = document.createElement('img');
+        productImg.classList.add('eyes-prod-img');
+
+        const productTitle = document.createElement('h4');
+        productTitle.classList.add('eyes-prod-name');
+
+        const productBrand = document.createElement('p');
+        productBrand.classList.add('eyes-prod-brand');
+
+        const productPrice = document.createElement('p');
+        productPrice.classList.add('eyes-prod-price');
+
+        const productRating = document.createElement('span');
+        productRating.classList.add('hair-prod-rating');
+
+        const addBtn = document.createElement('button');
+        addBtn.classList.add('toggle-basket');
+
+        filterOutputContainer.appendChild(productItem);
+        productItem.appendChild(div);
+        div.append(productImg, productTitle, productPrice, productBrand, productRating, addBtn);
+
+        productImg.setAttribute('src', array[i].image_link)
+        productTitle.innerText = array[i].name;
+        productPrice.innerHTML = array[i].price + '$';
+        productBrand.innerText = array[i].brand
+        productRating.innerHTML = array[i].rating;
+        productImg.addEventListener('error', () => {
+            productImg.setAttribute('src', '../assets/images/error-img.jpg')
+        })
+        addBtn.innerText = 'add';
     }
 
 }
@@ -613,63 +667,3 @@ function createAllEyesProducts() {
 // 10656664011 - dry shampoo
 // 11057651 - shampoos
 // }
-
-filterBrows.addEventListener('click', () => renderFilteredProductsCards(brows))
-filterLiner.addEventListener('click', renderFilteredProductsCards())
-filterShadows.addEventListener('click', renderFilteredProductsCards())
-filterMascara.addEventListener('click', renderFilteredProductsCards())
-
-
-
-    
-function renderFilteredProductsCards(array) {
-    for (let i = 0; i < this.array.length; i++) {
-
-        const productItem = document.createElement('div');
-        productItem.classList.add('eyes-cosm-prod');
-
-        const div = document.createElement('div')
-        div.classList.add('eyes-cosm-prod-cont');
-
-        const productImg = document.createElement('img');
-        productImg.classList.add('eyes-prod-img');
-
-        const productTitle = document.createElement('h4');
-        productTitle.classList.add('eyes-prod-name');
-
-        const productBrand = document.createElement('p');
-        productBrand.classList.add('eyes-prod-brand');
-
-        const productPrice = document.createElement('p');
-        productPrice.classList.add('eyes-prod-price');
-
-        const productRating = document.createElement('span');
-        productRating.classList.add('hair-prod-rating');
-
-        const addBtn = document.createElement('button');
-        addBtn.classList.add('toggle-basket');
-
-
-        cosmeticsContainer.appendChild(productItem);
-        productItem.appendChild(div);
-        div.append(productImg, productTitle, productPrice, productBrand, productRating, addBtn);
-
-        productImg.setAttribute('src', brows[i].image_link)
-        productTitle.innerText = brows[i].name;
-        productPrice.innerHTML = brows[i].price + '$';
-        productBrand.innerText = brows[i].brand
-        productRating.innerHTML = brows[i].rating;
-        productImg.addEventListener('error', () => {
-            productImg.setAttribute('src', '../assets/images/error-img.jpg')
-        })
-        addBtn.innerText = 'add';
-    }
-
-}
-
-
-
-
-
-
-
