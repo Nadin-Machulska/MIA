@@ -116,7 +116,7 @@ function handleAddToCart(id){
 
 function renderCart() {
     let ids = Object.keys(cart);
-
+    
     for (let i = 0; i < ids.length; i++) {
 
         let currentProduct = products.find(item => item.id == ids[i]);
