@@ -1346,7 +1346,7 @@ footer {
   margin-top: 50px;
   display: grid;
   justify-items: center;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 1px;
   grid-row-gap: 64px;
@@ -1908,9 +1908,7 @@ i {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 78px;
-  border: 1px solid white;
+  justify-content: space-between;
   background-color: rgba(255, 255, 255, 0.9803921569);
 }
 .bs-slide-container .ph-product {

@@ -1,3 +1,6 @@
+const productContainer = document.querySelectorAll('.bs-slide-container');
+const allMakeUpProducts = []
+
 const swiper = new Swiper(".bestsellers-swiper", {
   navigation: {
     nextEl: ".bestsellers-btn-next",
@@ -160,8 +163,18 @@ function initMap() {
 
 window.initMap = initMap;
 
+const openCartBtn = document.getElementById('cart-btn');
+const shopBasketCloseButton = document.querySelector('.modal-close');
+const basketModal = document.querySelector('.modal-window');
+const basketModalBody = document.querySelector('.modal-body');
 
-const productContainer = document.querySelectorAll('.bs-slide-container');
+openCartBtn.addEventListener('click', showCartModal);
+shopBasketCloseButton.addEventListener('click', hideCartModal);
+
+const bestsellersProducts = []
+const cart = JSON.parse(localStorage.getItem('cart')) || {};
+const productsId = [];
+
 
 function createBestSellersList() {
 
@@ -175,11 +188,10 @@ function createBestSellersList() {
   xhr.onload = () => {
 
     let a = JSON.parse(xhr.responseText);
-
-    for (let i = 0; i < a.length; i++) {
-      console.log(a[i].product_type)
-    }
-    console.log(a);
+    bestsellersProducts.push(a)
+    // for (let i = 0; i < a.length; i++) {
+    //   console.log(a[i].product_type)
+    // }
 
     productContainer.forEach(e => {
       let productName = document.createElement('p');
@@ -191,16 +203,109 @@ function createBestSellersList() {
       let productImage = document.createElement('img');
       productImage.classList.add('ph-product');
 
-      e.append(productImage, productName, productPrice);
+      const productBrand = document.createElement('p');
+      productBrand.classList.add('eyes-prod-brand');
+
+      const productRating = document.createElement('span');
+      productRating.classList.add('hair-prod-rating');
+
+
+      let addBtn = document.createElement('button');
+      addBtn.classList.add('toggle-basket');
+      addBtn.innerText = 'add';
+      
+      e.append(productImage, productName, productBrand, productPrice, productRating, addBtn);
 
       let product = a[Math.floor(Math.random() * a.length)];
 
       productImage.setAttribute('src', product.image_link);
       productName.innerText = product.name;
       productPrice.innerText = product.price + '$';
+      productBrand.innerText = product.brand;
+      productRating.innerText = product.rating;
+      productImage.addEventListener('error', () => {
+        productImage.setAttribute('src', '../assets/images/error-img.jpg')
+    });
 
+      addBtn.addEventListener('click', () => handleAddToCart(product.id))
 
     });
   }
 }
+
+function showCartModal() {
+  renderCart();
+  basketModal.style.display = 'block';
+}
+
+function hideCartModal() {
+  basketModal.style.display = 'none';
+}
+
+function handleAddToCart(id){
+  cart[id] = (cart[id] || 0) + 1;
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function getAllProducts() {
+  const url = [
+    "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=blush",
+    "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=bronzer",
+    "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=foundation",
+    "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyeliner",
+    "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyeshadow",
+    "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyebrow",
+    "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=mascara",
+    "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=lipstick",
+    "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=lip liner"
+  ]
+
+  for (let i = 0; i < url.length; i++) {
+
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.open('GET', url[i]);
+    xhttp.send();
+    xhttp.onload = () => {
+      let response = JSON.parse(xhttp.responseText);
+      allMakeUpProducts.push(response);
+    }
+  }
+
+}
+
+
+function renderCart() {
+  let ids = Object.keys(cart);
+  
+  for (let i = 0; i < ids.length; i++) {
+
+      let currentProduct = allMakeUpProducts.flat().find(item => item.id == ids[i]);
+
+      const boughtProductsContainer = document.createElement('div');
+      boughtProductsContainer.classList.add('pr-bought-cont')
+
+      const productBoughtName = document.createElement('div');
+      productBoughtName.classList.add('pr-bought-name');
+
+      const productBoughtPrice = document.createElement('div');
+      productBoughtPrice.classList.add('pr-bought-price');
+
+      const prodBoughtCount = document.createElement('div');
+      prodBoughtCount.classList.add('prod-count');
+      basketModalBody.appendChild(boughtProductsContainer)
+      boughtProductsContainer.append(productBoughtName, productBoughtPrice, prodBoughtCount);
+
+
+      productBoughtName.innerHTML = currentProduct.name + currentProduct.brand;
+      productBoughtPrice.innerText = currentProduct.price + '$';
+      prodBoughtCount.innerText = cart[ids[i]];
+  }
+}
+
+
+
+
 createBestSellersList();
+getAllProducts();
+

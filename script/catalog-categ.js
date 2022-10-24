@@ -1,29 +1,66 @@
-
 const openFilterModal = document.querySelector('.categ-flter');
 const filterModal = document.querySelector('.modal-filter')
-
-openFilterModal.addEventListener('click', () => {
-    filterModal.classList.toggle('shown');
-})
-
 //filter btns
 const showAllButton = document.querySelector('.show-all');
 const filterLiner = document.querySelector('.liner');
 const filterShadows = document.querySelector('.shadows');
 const filterMascara = document.querySelector('.mascara');
 const filterBrows = document.querySelector('.brows')
-
 //containers
 const cosmeticsContainer = document.querySelector('.eyes-cosm-container');
 const filterOutputContainer = document.querySelector('.filt-container');
+//cart
+const openCartBtn = document.getElementById('cart-btn');
+const shopBasketCloseButton = document.querySelector('.modal-close');
+const basketModal = document.querySelector('.modal-window');
+const basketModalBody = document.querySelector('.modal-body');
 
-createAllEyesProducts();
+openCartBtn.addEventListener('click', showCartModal);
+shopBasketCloseButton.addEventListener('click', hideCartModal);
+
+const allMakeUpProducts = [];
+const productsId = [];
+const cart = JSON.parse(localStorage.getItem('cart')) || {};
+
 const allEyesProducts = []
 let brows
 let eyeLiners
 let shadows
 let mascaras
 
+openFilterModal.addEventListener('click', () => {
+    filterModal.classList.toggle('shown');
+})
+
+getAllProducts();
+function getAllProducts() {
+    const url = [
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=blush",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=bronzer",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=foundation",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyeliner",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyeshadow",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyebrow",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=mascara",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=lipstick",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=lip liner"
+    ]
+  
+    for (let i = 0; i < url.length; i++) {
+  
+      const xhttp = new XMLHttpRequest();
+  
+      xhttp.open('GET', url[i]);
+      xhttp.send();
+      xhttp.onload = () => {
+        let response = JSON.parse(xhttp.responseText);
+        allMakeUpProducts.push(response);
+      }
+    }
+  
+}
+
+createAllEyesProducts();
 function createAllEyesProducts() {
     const urlEyebrow = 'http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyebrow'
     const xhttp = new XMLHttpRequest();
@@ -74,6 +111,8 @@ function createAllEyesProducts() {
                 productImg.setAttribute('src', '../assets/images/error-img.jpg')
             })
             addBtn.innerText = 'add';
+            addBtn.addEventListener('click', () => handleAddToCart(brows[i].id))
+
         }
 
     }
@@ -126,7 +165,7 @@ function createAllEyesProducts() {
                 productImg.setAttribute('src', '../assets/images/error-img.jpg')
             })
             addBtn.innerText = 'add';
-
+            addBtn.addEventListener('click', () => handleAddToCart(eyeLiners[i].id))
         }
     }
 
@@ -178,7 +217,7 @@ function createAllEyesProducts() {
                 productImg.setAttribute('src', '../assets/images/error-img.jpg')
             })
             addBtn.innerText = 'add';
-
+            addBtn.addEventListener('click', () => handleAddToCart(shadows[i].id))
         }
     }
 
@@ -230,6 +269,8 @@ function createAllEyesProducts() {
                 productImg.setAttribute('src', '../assets/images/error-img.jpg')
             })
             addBtn.innerText = 'add';
+            addBtn.addEventListener('click', () => handleAddToCart(mascaras[i].id))
+
         }
     }
 
@@ -286,9 +327,56 @@ function renderFilteredProductsCards(array) {
             productImg.setAttribute('src', '../assets/images/error-img.jpg')
         })
         addBtn.innerText = 'add';
+        addBtn.addEventListener('click', () => handleAddToCart(array[i].id))
+
     }
 
 }
+
+function showCartModal() {
+    renderCart();
+    basketModal.style.display = 'block';
+  }
+  
+  function hideCartModal() {
+    basketModal.style.display = 'none';
+  }
+  
+  function handleAddToCart(id){
+    cart[id] = (cart[id] || 0) + 1;
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+  
+  function renderCart() {
+    let ids = Object.keys(cart);
+    
+    for (let i = 0; i < ids.length; i++) {
+  
+        let currentProduct = allMakeUpProducts.flat().find(item => item.id == ids[i]);
+  
+        const boughtProductsContainer = document.createElement('div');
+        boughtProductsContainer.classList.add('pr-bought-cont')
+  
+        const productBoughtName = document.createElement('div');
+        productBoughtName.classList.add('pr-bought-name');
+  
+        const productBoughtPrice = document.createElement('div');
+        productBoughtPrice.classList.add('pr-bought-price');
+  
+        const prodBoughtCount = document.createElement('div');
+        prodBoughtCount.classList.add('prod-count');
+        basketModalBody.appendChild(boughtProductsContainer)
+        boughtProductsContainer.append(productBoughtName, productBoughtPrice, prodBoughtCount);
+  
+  
+        productBoughtName.innerHTML = currentProduct.name + currentProduct.brand;
+        productBoughtPrice.innerText = currentProduct.price + '$';
+        prodBoughtCount.innerText = cart[ids[i]];
+    }
+  }
+  
+  
+  
 
 // filterBrows.addEventListener('click', () => {
 //     const urlEyebrow = 'http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyebrow'

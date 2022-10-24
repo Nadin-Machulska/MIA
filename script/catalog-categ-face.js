@@ -1,28 +1,64 @@
-
 const openFilterModal = document.querySelector('.categ-flter');
 const filterModal = document.querySelector('.modal-filter')
-
-openFilterModal.addEventListener('click', () => {
-    filterModal.classList.toggle('shown');
-})
-
 //filter btns
 const showAllButton = document.querySelector('.show-all');
 const filterFoundation = document.querySelector('.foundation');
 const filterBlush = document.querySelector('.blush');
 const filterBronzer = document.querySelector('.bronzer');
-
 //containers
 const cosmeticsContainer = document.querySelector('.face-cosm-container');
 const filterOutputContainer = document.querySelector('.filt-container');
+//cart
+const openCartBtn = document.getElementById('cart-btn');
+const shopBasketCloseButton = document.querySelector('.modal-close');
+const basketModal = document.querySelector('.modal-window');
+const basketModalBody = document.querySelector('.modal-body');
+
+openCartBtn.addEventListener('click', showCartModal);
+shopBasketCloseButton.addEventListener('click', hideCartModal);
+
+const allMakeUpProducts = [];
+const productsId = [];
+const cart = JSON.parse(localStorage.getItem('cart')) || {};
 
 const allFaceProducts = []
 let foundations
 let blushes
 let bronzers
 
-createAllFaceProducts();
+openFilterModal.addEventListener('click', () => {
+    filterModal.classList.toggle('shown');
+})
 
+getAllProducts();
+function getAllProducts() {
+    const url = [
+        "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=blush",
+        "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=bronzer",
+        "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=foundation",
+        "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyeliner",
+        "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyeshadow",
+        "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyebrow",
+        "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=mascara",
+        "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=lipstick",
+        "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=lip liner"
+    ]
+
+    for (let i = 0; i < url.length; i++) {
+
+        const xhttp = new XMLHttpRequest();
+
+        xhttp.open('GET', url[i]);
+        xhttp.send();
+        xhttp.onload = () => {
+            let response = JSON.parse(xhttp.responseText);
+            allMakeUpProducts.push(response);
+        }
+    }
+
+}
+
+createAllFaceProducts();
 function createAllFaceProducts() {
     const urlFound = 'http://makeup-api.herokuapp.com/api/v1/products.json?product_type=foundation'
     const xhttp = new XMLHttpRequest();
@@ -56,12 +92,12 @@ function createAllFaceProducts() {
             const productRating = document.createElement('span');
             productRating.classList.add('hair-prod-rating');
 
-            const buttonBasket = document.createElement('button');
-            buttonBasket.classList.add('toggle-basket');
+            const addBtn = document.createElement('button');
+            addBtn.classList.add('toggle-basket');
 
             cosmeticsContainer.appendChild(productItem);
             productItem.appendChild(div);
-            div.append(productImg, productTitle, productPrice, productBrand, productRating, buttonBasket);
+            div.append(productImg, productTitle, productPrice, productBrand, productRating, addBtn);
 
             productImg.setAttribute('src', foundations[i].image_link)
             productTitle.innerText = foundations[i].name;
@@ -71,45 +107,11 @@ function createAllFaceProducts() {
             productImg.addEventListener('error', () => {
                 productImg.setAttribute('src', '../assets/images/error-img.jpg')
             })
-            buttonBasket.innerText = 'add';
-            // buttonBasket.dataset.id = products[i].id;
-            buttonBasket.addEventListener('click', () => {
-
-                basket[products[i].id] = (basket[products[i].id] || 0) + 1;
-                localStorage.setItem('cart', JSON.stringify(basket));
-                let boughtProduct = JSON.parse(localStorage.getItem('cart'));
-                let propBoughtProd = Object.keys(boughtProduct);
-                console.log(boughtProduct);
-                console.log(propBoughtProd)
-
-
-                let currentProduct = products.find(item => item.id == (Number(propBoughtProd[0])));
-
-                const boughtProductsContainer = document.createElement('div');
-                boughtProductsContainer.classList.add('pr-bought-cont')
-
-                const productBoughtName = document.createElement('div');
-                productBoughtName.classList.add('pr-bought-name');
-
-                const productBoughtPrice = document.createElement('div');
-                productBoughtPrice.classList.add('pr-bought-price');
-
-                const prodBoughtCount = document.createElement('div');
-                prodBoughtCount.classList.add('prod-count');
-                basketModalBody.appendChild(boughtProductsContainer)
-                boughtProductsContainer.append(productBoughtName, productBoughtPrice, prodBoughtCount);
-
-
-                productBoughtName.innerText = currentProduct.name + currentProduct.brand;
-                productBoughtPrice.innerText = currentProduct.price + '$';
-                prodBoughtCount.innerHTML = Object.values(boughtProduct);
-
-            }
-            )
-
+            addBtn.innerText = 'add';
+            addBtn.addEventListener('click', () => handleAddToCart(foundations[i].id))
         }
-
     }
+
     const urlBlush = 'http://makeup-api.herokuapp.com/api/v1/products.json?product_type=blush';
     const xhttpSecond = new XMLHttpRequest();
     xhttpSecond.open('GET', urlBlush);
@@ -141,13 +143,12 @@ function createAllFaceProducts() {
             const productRating = document.createElement('span');
             productRating.classList.add('hair-prod-rating');
 
-            const buttonBasket = document.createElement('button');
-            buttonBasket.classList.add('toggle-basket');
-
+            const addBtn = document.createElement('button');
+            addBtn.classList.add('toggle-basket');
 
             cosmeticsContainer.appendChild(productItem);
             productItem.appendChild(div);
-            div.append(productImg, productTitle, productPrice, productBrand, productRating, buttonBasket);
+            div.append(productImg, productTitle, productPrice, productBrand, productRating, addBtn);
 
             productImg.setAttribute('src', blushes[i].image_link)
             productTitle.innerText = blushes[i].name;
@@ -157,42 +158,8 @@ function createAllFaceProducts() {
             productImg.addEventListener('error', () => {
                 productImg.setAttribute('src', '../assets/images/error-img.jpg')
             })
-            buttonBasket.innerText = 'add';
-            // buttonBasket.dataset.id = products[i].id;
-            buttonBasket.addEventListener('click', () => {
-
-                basket[products[i].id] = (basket[products[i].id] || 0) + 1;
-                localStorage.setItem('cart', JSON.stringify(basket));
-                let boughtProduct = JSON.parse(localStorage.getItem('cart'));
-                let propBoughtProd = Object.keys(boughtProduct);
-                console.log(boughtProduct);
-                console.log(propBoughtProd)
-
-
-                let currentProduct = products.find(item => item.id == (Number(propBoughtProd[0])));
-
-                const boughtProductsContainer = document.createElement('div');
-                boughtProductsContainer.classList.add('pr-bought-cont')
-
-                const productBoughtName = document.createElement('div');
-                productBoughtName.classList.add('pr-bought-name');
-
-                const productBoughtPrice = document.createElement('div');
-                productBoughtPrice.classList.add('pr-bought-price');
-
-                const prodBoughtCount = document.createElement('div');
-                prodBoughtCount.classList.add('prod-count');
-                basketModalBody.appendChild(boughtProductsContainer)
-                boughtProductsContainer.append(productBoughtName, productBoughtPrice, prodBoughtCount);
-
-
-                productBoughtName.innerText = currentProduct.name + currentProduct.brand;
-                productBoughtPrice.innerText = currentProduct.price + '$';
-                prodBoughtCount.innerHTML = Object.values(boughtProduct);
-
-            }
-            )
-
+            addBtn.innerText = 'add';
+            addBtn.addEventListener('click', () => handleAddToCart(blushes[i].id))
         }
     }
 
@@ -227,13 +194,12 @@ function createAllFaceProducts() {
             const productRating = document.createElement('span');
             productRating.classList.add('hair-prod-rating');
 
-            const buttonBasket = document.createElement('button');
-            buttonBasket.classList.add('toggle-basket');
-
+            const addBtn = document.createElement('button');
+            addBtn.classList.add('toggle-basket');
 
             cosmeticsContainer.appendChild(productItem);
             productItem.appendChild(div);
-            div.append(productImg, productTitle, productPrice, productBrand, productRating, buttonBasket);
+            div.append(productImg, productTitle, productPrice, productBrand, productRating, addBtn);
 
             productImg.setAttribute('src', bronzers[i].image_link)
             productTitle.innerText = bronzers[i].name;
@@ -243,45 +209,10 @@ function createAllFaceProducts() {
             productImg.addEventListener('error', () => {
                 productImg.setAttribute('src', '../assets/images/error-img.jpg')
             })
-            buttonBasket.innerText = 'add';
-            // buttonBasket.dataset.id = products[i].id;
-            buttonBasket.addEventListener('click', () => {
-
-                basket[products[i].id] = (basket[products[i].id] || 0) + 1;
-                localStorage.setItem('cart', JSON.stringify(basket));
-                let boughtProduct = JSON.parse(localStorage.getItem('cart'));
-                let propBoughtProd = Object.keys(boughtProduct);
-                console.log(boughtProduct);
-                console.log(propBoughtProd)
-
-
-                let currentProduct = products.find(item => item.id == (Number(propBoughtProd[0])));
-
-                const boughtProductsContainer = document.createElement('div');
-                boughtProductsContainer.classList.add('pr-bought-cont')
-
-                const productBoughtName = document.createElement('div');
-                productBoughtName.classList.add('pr-bought-name');
-
-                const productBoughtPrice = document.createElement('div');
-                productBoughtPrice.classList.add('pr-bought-price');
-
-                const prodBoughtCount = document.createElement('div');
-                prodBoughtCount.classList.add('prod-count');
-                basketModalBody.appendChild(boughtProductsContainer)
-                boughtProductsContainer.append(productBoughtName, productBoughtPrice, prodBoughtCount);
-
-
-                productBoughtName.innerText = currentProduct.name + currentProduct.brand;
-                productBoughtPrice.innerText = currentProduct.price + '$';
-                prodBoughtCount.innerHTML = Object.values(boughtProduct);
-
-            }
-            )
-
+            addBtn.innerText = 'add';
+            addBtn.addEventListener('click', () => handleAddToCart(bronzers[i].id))
         }
     }
-
 }
 
 filterFoundation.addEventListener('click', () => renderFilteredProductsCards(foundations))
@@ -333,12 +264,50 @@ function renderFilteredProductsCards(array) {
             productImg.setAttribute('src', '../assets/images/error-img.jpg')
         })
         addBtn.innerText = 'add';
+        addBtn.addEventListener('click', () => handleAddToCart(array[i].id))
     }
-
 }
-
-
-
+function showCartModal() {
+    renderCart();
+    basketModal.style.display = 'block';
+  }
+  
+  function hideCartModal() {
+    basketModal.style.display = 'none';
+  }
+  
+  function handleAddToCart(id){
+    cart[id] = (cart[id] || 0) + 1;
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+  
+  function renderCart() {
+    let ids = Object.keys(cart);
+    
+    for (let i = 0; i < ids.length; i++) {
+  
+        let currentProduct = allMakeUpProducts.flat().find(item => item.id == ids[i]);
+  
+        const boughtProductsContainer = document.createElement('div');
+        boughtProductsContainer.classList.add('pr-bought-cont')
+  
+        const productBoughtName = document.createElement('div');
+        productBoughtName.classList.add('pr-bought-name');
+  
+        const productBoughtPrice = document.createElement('div');
+        productBoughtPrice.classList.add('pr-bought-price');
+  
+        const prodBoughtCount = document.createElement('div');
+        prodBoughtCount.classList.add('prod-count');
+        basketModalBody.appendChild(boughtProductsContainer)
+        boughtProductsContainer.append(productBoughtName, productBoughtPrice, prodBoughtCount);
+  
+  
+        productBoughtName.innerHTML = currentProduct.name + currentProduct.brand;
+        productBoughtPrice.innerText = currentProduct.price + '$';
+        prodBoughtCount.innerText = cart[ids[i]];
+    }
+  }
 
 // filterFoundatiom.addEventListener('click', () => {
 //     const urlFound = 'http://makeup-api.herokuapp.com/api/v1/products.json?product_type=foundation'
