@@ -21,6 +21,7 @@ shopBasketCloseButton.addEventListener('click', hideCartModal);
 
 const cart = JSON.parse(localStorage.getItem('cart')) || {};
 const productsId = [];
+const allMakeUpProducts = [];
 
 
 btnFilterModal.addEventListener('click', openFilterModal);
@@ -55,6 +56,37 @@ function showCartModal() {
 function hideCartModal() {
     basketModal.style.display = 'none';
 }
+
+getAllProducts();
+function getAllProducts() {
+    const url = [
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=blush",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=bronzer",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=foundation",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyeliner",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyeshadow",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyebrow",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=mascara",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=lipstick",
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=lip liner"
+    ]
+  
+    for (let i = 0; i < url.length; i++) {
+  
+      const xhttp = new XMLHttpRequest();
+  
+      xhttp.open('GET', url[i]);
+      xhttp.send();
+      xhttp.onload = () => {
+        let response = JSON.parse(xhttp.responseText);
+        allMakeUpProducts.push(response);
+      }
+    }
+  
+}
+
+
+
 
 
 let productsArray = localStorage.getItem('productsArray');
@@ -119,7 +151,7 @@ function renderCart() {
     
     for (let i = 0; i < ids.length; i++) {
 
-        let currentProduct = products.find(item => item.id == ids[i]);
+        let currentProduct = allMakeUpProducts.flat().find(item => item.id == ids[i]);
 
         const boughtProductsContainer = document.createElement('div');
         boughtProductsContainer.classList.add('pr-bought-cont')
