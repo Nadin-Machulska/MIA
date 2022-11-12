@@ -11,7 +11,7 @@ class MyHeader extends HTMLElement {
         <div class="header-nav">
             <a href="../index.html">About us</a>
             <a href="#contacts">Contacts</a>
-            <a href="../html/catalog1.html">Catalog</a>
+            <a href="catalog1.html">Catalog</a>
             <a href="">Loyality</a>
         </div>
         <div class="header-client">

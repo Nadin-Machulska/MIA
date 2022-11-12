@@ -381,7 +381,7 @@ header {
   font-family: "Montserrat";
   color: #fc3d76;
   font-weight: 500;
-  font-size: 30px;
+  font-size: 48px;
 }
 
 .header-nav {
@@ -396,6 +396,7 @@ header {
   text-decoration: none;
   text-transform: uppercase;
   font-style: normal !important;
+  font-size: 20px;
 }
 .header-nav a:hover {
   color: #fc3d76;
@@ -417,12 +418,14 @@ header {
   gap: 14px;
   background-color: white;
   color: black;
+  font-size: 20px;
 }
 .header-btns #cart-btn {
-  width: 49px;
-  height: 40px;
+  width: 86px;
+  height: 43px;
   border-radius: 70px;
   background-color: white;
+  font-size: 26px;
 }
 
 .header-client {
@@ -617,7 +620,8 @@ header {
 }
 .logo p {
   font-family: "Montserrat";
-  font-size: 19px;
+  font-size: 24px;
+  padding-left: 39px;
   font-style: italic;
   color: #fc3d76;
 }
@@ -701,18 +705,21 @@ header {
   transform: translate(-50%, -80%) scale(0.9);
   width: 1000px;
   min-height: 400px;
+  max-height: 500px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  background-color: #fff;
+  background-color: rgba(104, 199, 179, 0.9490196078);
   border-radius: 4px;
   transition: all 0.18s ease-in-out;
   display: none;
   opacity: 1;
+  overflow-y: scroll;
 }
 .modal-window h3 {
-  font-family: "Monserrat";
+  font-family: "Montserrat";
   font-size: 26px;
   text-align: center;
   margin-bottom: 29px;
+  color: white;
 }
 
 .pr-bought-cont {
@@ -733,13 +740,13 @@ header {
 .pr-bought-name {
   font-family: "Montserrat";
   font-size: 19px;
-  color: #000;
+  color: white;
 }
 
 .pr-bought-price {
   font-family: "Montserrat";
   font-size: 19px;
-  color: #000;
+  color: blue;
 }
 
 .prod-count {
@@ -759,7 +766,7 @@ header {
   background: transparent;
 }
 
-body {
+.wrapper-w-photo {
   background-image: url(../assets/images/desert-back6.jpg);
   background-repeat: repeat-y;
   background-size: cover;
@@ -1071,6 +1078,7 @@ footer {
 .eyes-prod-img {
   width: 100%;
   height: 234px;
+  flex-shrink: 0;
 }
 
 .eyes-prod-name {
@@ -1107,10 +1115,10 @@ footer {
   margin-top: 50px;
   display: grid;
   justify-items: center;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 1px;
-  grid-row-gap: 10px;
+  grid-row-gap: 64px;
 }
 
 .brows-filt-cont {
@@ -1172,6 +1180,7 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   gap: 28px;
   height: 100%;
 }
@@ -1186,6 +1195,16 @@ footer {
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 17px;
   grid-row-gap: 14px;
+}
+
+.filt-container {
+  justify-items: center;
+  justify-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 82px;
+  grid-row-gap: 64px;
+  margin-top: 64px;
 }
 
 @media screen and (max-width: 650px) {
@@ -1289,6 +1308,7 @@ footer {
   font-size: 17px;
   color: white;
   width: 100%;
+  text-transform: lowercase;
 }
 .modal-filter button:hover {
   color: black;
@@ -1333,10 +1353,10 @@ footer {
   margin-top: 50px;
   display: grid;
   justify-items: center;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 1px;
-  grid-row-gap: 10px;
+  grid-row-gap: 64px;
 }
 
 .found-filt-cont {
@@ -1399,7 +1419,7 @@ footer {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 17px;
-  grid-row-gap: 14px;
+  grid-row-gap: 64px;
 }
 
 .link {
@@ -1512,6 +1532,7 @@ footer {
   }
 }
 .filt-output {
+  margin: 0 auto;
   margin-top: 60px;
   max-width: 1500px;
 }
@@ -1706,6 +1727,7 @@ label {
   font-family: "Montserrat";
   font-style: normal;
   font-size: 19px;
+  flex-shrink: 0;
 }
 
 @media screen and (max-width: 1000px) {
@@ -1728,8 +1750,8 @@ label {
     grid-column-gap: 60px;
   }
 }
-.back-image {
-  background-image: url(../assets/images/desert-back4.jpg) !important;
+body {
+  background-image: url(../assets/images/back-beige.jpg) !important;
   background-repeat: repeat-y;
   background-size: cover;
 }
@@ -1857,20 +1879,20 @@ i {
   }
 }
 .best-sellers {
-  margin-top: 70px;
+  margin-top: 177px;
 }
 .best-sellers h2 {
   font-family: "Montserrat";
   font-weight: 500;
-  font-size: 47px;
+  font-size: 63px;
   text-align: center;
-  color: white;
+  color: black;
 }
 
 .bs-container {
   max-width: 1500px;
   margin: 0 auto;
-  margin-top: 30px;
+  margin-top: 71px;
   height: 665px;
 }
 
@@ -1882,8 +1904,7 @@ i {
 
 .bestsellers-slide {
   display: flex;
-  justify-content: center;
-  gap: 151px;
+  justify-content: space-between;
   width: 700px;
   height: 100%;
 }
@@ -1894,9 +1915,7 @@ i {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 78px;
-  border: 1px solid white;
+  justify-content: space-between;
   background-color: rgba(255, 255, 255, 0.9803921569);
 }
 .bs-slide-container .ph-product {
@@ -1921,6 +1940,7 @@ i {
 }
 
 .bestsellers-btn-prev {
+  display: none;
   top: 185%;
   left: 7%;
   font-weight: 600;
@@ -1928,29 +1948,33 @@ i {
 }
 
 .bestsellers-btn-next {
+  display: none;
   top: 185%;
   left: 89%;
   font-weight: 600;
   color: #d100ef !important;
 }
 
+.popular-sellers {
+  margin-top: 100px;
+}
 .popular-sellers h2 {
   font-family: "Montserrat";
   font-weight: 500;
-  font-size: 47px;
+  font-size: 63px;
   text-align: center;
-  color: white;
+  color: black;
 }
 
 .ps-container {
   max-width: 1500px;
   margin: 0 auto;
-  margin-top: 30px;
+  margin-top: 123px;
   height: 588px;
 }
 
 .popularSellers {
-  width: 81%;
+  width: 102%;
   height: 100%;
 }
 
@@ -1960,7 +1984,7 @@ i {
 }
 
 .ps-slide-container {
-  height: 500px;
+  height: 629px;
 }
 .ps-slide-container div {
   display: flex;
@@ -1979,13 +2003,14 @@ i {
   position: absolute;
   z-index: -1;
   height: 100%;
+  height: 126%;
 }
 .ps-slide-container p {
   position: relative;
   z-index: 1;
   font-family: "Montserrat";
   font-size: 20px;
-  color: #acb5f1;
+  color: black;
   line-height: 1.2;
   font-weight: 600;
   text-align: left;
@@ -2006,6 +2031,7 @@ i {
 }
 
 .popularsellers-btn-next {
+  display: none;
   width: 50px;
   height: 50px;
   /* right: -60px; */
@@ -2016,6 +2042,7 @@ i {
 }
 
 .popularsellers-bnt-prev {
+  display: none;
   width: 50px;
   height: 50px;
   /* right: -60px; */
@@ -2028,12 +2055,12 @@ i {
 .upcoming-event {
   max-width: 1500px;
   margin: 0 auto;
-  margin-top: 40px;
+  margin-top: 145px;
 }
 .upcoming-event h2 {
   font-family: "Montserrat";
   font-weight: 500;
-  font-size: 43px;
+  font-size: 63px;
   text-align: center;
 }
 
@@ -2041,9 +2068,9 @@ i {
   width: 100%;
   height: 600px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   gap: 150px;
-  margin-top: 70px;
+  margin-top: 128px;
 }
 
 .up-ev-container {
@@ -2078,19 +2105,20 @@ i {
 }
 
 footer {
-  margin-top: 40px;
+  margin-top: 77px;
 }
 
 .footer-container {
   max-width: 1500px;
   margin: 0 auto;
+  margin-top: 136px;
 }
 .footer-container h2 {
   font-family: "Montserrat";
   font-weight: 500;
-  font-size: 40px;
+  font-size: 63px;
   text-align: center;
-  color: white;
+  color: black;
 }
 
 .footer-nav {
@@ -2110,8 +2138,8 @@ footer {
 .nav-content h6 {
   font-family: "Montserrat";
   font-weight: 500;
-  font-size: 35px;
-  color: white;
+  font-size: 42px;
+  color: black;
 }
 .nav-content p {
   font-family: "Montserrat";
@@ -2144,10 +2172,10 @@ footer {
 }
 
 .map-container {
-  height: 500px;
+  height: 800px;
   margin: 0 auto;
   margin-top: 50px;
-  width: 82%;
+  width: 100%;
 }
 
 @media screen and (max-width: 1100px) {
@@ -2171,9 +2199,13 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 1308px;
   }
 }
 @media screen and (max-width: 600px) {
+  .popular-sellers {
+    display: none;
+  }
   .bestsellers-slide {
     display: flex;
     flex-direction: column;
@@ -2221,5 +2253,9 @@ footer {
     font-weight: 500;
     font-size: 18px;
     color: #db82f4;
+  }
+  .upcoming-wrapper {
+    height: 1762px;
+    margin-top: 0;
   }
 }/*# sourceMappingURL=style.css.map */

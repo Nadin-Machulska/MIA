@@ -25,7 +25,7 @@ header {
         font-family: 'Montserrat';
         color: #fc3d76;
         font-weight: 500;
-        font-size: 30px;
+        font-size: 48px;
     }
 }
 
@@ -41,6 +41,7 @@ header {
         text-decoration: none;
         text-transform: uppercase;
         font-style: normal !important;
+        font-size: 20px;
     }
 
     a:hover {
@@ -64,13 +65,15 @@ header {
         gap: 14px;
         background-color: white;
         color: black;
+        font-size: 20px;
     }
 
     #cart-btn {
-        width: 49px;
-        height: 40px;
+        width: 86px;
+        height: 43px;
         border-radius: 70px;
         background-color: white;
+        font-size: 26px;
     }
 }
 
@@ -290,7 +293,8 @@ header {
 
     p {
         font-family: 'Montserrat';
-        font-size: 19px;
+        font-size: 24px;
+        padding-left: 39px;
         font-style: italic;
         color: #fc3d76;
     }
@@ -393,18 +397,21 @@ header {
     transform: translate(-50%, -80%) scale(.9);
     width: 1000px;
     min-height: 400px;
+    max-height: 500px;
     box-shadow: 0 10px 30px rgba(#000, .2);
-    background-color: #fff;
+    background-color: #68c7b3f2;
     border-radius: 4px;
     transition: all .18s ease-in-out;
     display: none;
     opacity: 1;
+    overflow-y: scroll;
 
     h3{
-        font-family: 'Monserrat';
+        font-family: 'Montserrat';
         font-size: 26px;
         text-align: center;
         margin-bottom: 29px;
+        color: white;
     }
 }
 
@@ -424,12 +431,12 @@ header {
 .pr-bought-name{
     font-family: 'Montserrat';
     font-size: 19px;
-    color: #000;
+    color: white;
 }
 .pr-bought-price{
     font-family: 'Montserrat';
     font-size: 19px;
-    color: #000;
+    color: blue;
 
 }
 .prod-count{
